@@ -1,15 +1,15 @@
 user = $(shell id --user):$(shell id --group)
-hslfile = release/$(number)_$(name).hsl
+hslfile = hsl3_$(number)_$(name).hsl
 
-python2 = docker run --user ${user} --volume "$(shell pwd):/hsl/projects/$(name)" --workdir /hsl lindra/gira /usr/bin/python2
+python = docker run --user ${user} --volume "$(shell pwd):/project" --workdir /project lindra/gira /usr/bin/python3
 
 
 .PHONY: clean default
 
 default: $(hslfile)
 
-$(hslfile): config.xml src/*.py
-	$(python2) generator.pyc "$(name)"
+$(hslfile): config.json *.py
+	$(python) /hsl/generator.pyc --source config.json --target "$@" --debug
 
 $(hslfile).zip: $(hslfile)
 	zip "$@" "$^"
