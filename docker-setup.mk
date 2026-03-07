@@ -1,7 +1,7 @@
 user = $(shell id --user):$(shell id --group)
 hslfile = hsl3_$(number)_$(name).hsl
 
-python = docker run --user ${user} --volume "$(shell pwd):/project" --workdir /project lindra/gira /usr/bin/python3
+python = docker run --user ${user} --volume "$(shell pwd):/project" --workdir /project lindra/hsl3 /usr/bin/python3
 
 
 .PHONY: clean default
