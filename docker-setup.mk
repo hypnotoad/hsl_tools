@@ -1,5 +1,5 @@
 user = $(shell id --user):$(shell id --group)
-hslfile = hsl3_$(number)_$(name).hsl
+hslfile = $(number)_$(name).hsl
 
 python = docker run --user ${user} --volume "$(shell pwd):/project" --workdir /project lindra/hsl3 /usr/bin/python3
 
