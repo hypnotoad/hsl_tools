@@ -8,8 +8,8 @@ xq config.xml  -j > config.json
 ## Usage
 1. create docker image
 ```
-cd hsl2 && docker build -t lindra/gira .
-cd hsl3 && docker build -t lindra/hsl3 .
+cd hsl2 && docker build -t lindra.de/gira_hsl2 .
+cd hsl3 && docker build -t lindra.de/gira_hsl3 .
 ```
 
 2. Copy Makefile and docker-setup.mk into your project and adapt

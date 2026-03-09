@@ -1,5 +1,5 @@
-# docker build -t lindra/gira .
-# docker run lindra/gira
+# docker build -t lindra.de/gira_hsl2 .
+# docker run lindra.de/gira_hsl2
 
 FROM debian:bullseye-slim
 
