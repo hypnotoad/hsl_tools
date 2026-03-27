@@ -58,17 +58,22 @@ class Hsl3Framework:
         func(*args[0])
 
     def set_output(self, key, value):
-        assert key in self.outputs
+        if not key in self.outputs:
+            raise Exception("Unknown output: {}".format(key))
         if self.outputs[key]["type"] == "string":
-            assert type(value) == bytes
+            if type(value) != bytes:
+                raise Exception("Wrong string output type must be bytes, it is: {}".format(type(value)))
         else:
-            assert type(value) == float or type(value) == int
+            if type(value) != float and type(value) != int:
+                raise Exception("Wrong number output type must be int or float, it is: {}".format(type(value)))
         self.output_state[key] = value
         logging.debug("output[{}] := {}".format(key, value))
 
     def set_timer(self, key, interval_s):
-        assert key in self.timers
-        assert self.module is not None
+        if not key in self.timers:
+            raise Exception("Unknown timer: {}".format(key))
+        if self.module is None:
+            raise Exception("set_module() not called yet")
 
         with self.lock:
             self.timers[key] = Hsl3Slot(interval_s)
