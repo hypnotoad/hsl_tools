@@ -20,12 +20,13 @@
 #  SOFTWARE.
 
 import copy
+import logging
 import json
 import threading
 
 class DebugSection:
     def log(self, text):
-        print(text)
+        logging.debug("debug section: {}".format(text))
     
 class Hsl3Framework:
     def __init__(self, configfile):
@@ -61,7 +62,8 @@ class Hsl3Framework:
             assert type(value) == bytes
         else:
             assert type(value) == float or type(value) == int
-        print("Setting output {} to {}".format(key, value))
+        self.output_state[key] = value
+        logging.debug("output[{}] := {}".format(key, value))
 
     def set_timer(self, key, interval_s):
         assert key in self.timers
