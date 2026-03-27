@@ -37,6 +37,7 @@ class Hsl3Framework:
         self.outputs = self.interfaces_to_dict(self.config["outputs"])
         self.timers = self.interfaces_to_dict(self.config["timers"])
         self.module = None
+        self.output_state = {}
         self.is_mock = True
         self.lock = threading.Lock()
 
@@ -82,6 +83,12 @@ class Hsl3Framework:
             threading.Timer(interval_s, timer_finished).start()
             
         
+    def get_output(self, key):
+        if not key in self.output_state:
+            return None
+        else:
+            return self.output_state[key]
+
 class Hsl3Slot:
     def __init__(self, value):
         self.value = value
