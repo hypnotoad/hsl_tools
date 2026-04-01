@@ -1,4 +1,6 @@
-# generate in Docker
+# Tools for HSL2 and HSL3
+- compiling
+- testing
 
 ## HSL2 -> HSL3 Snippets
 ```
