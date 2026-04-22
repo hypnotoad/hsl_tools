@@ -29,6 +29,8 @@ class DebugSection:
         logging.debug("debug section: {}".format(text))
     
 class Hsl3Framework:
+    _next_instance_id = 1
+    
     def __init__(self, configfile):
         with open(configfile) as f:
             self.config = json.load(f)["module"]
@@ -42,7 +44,9 @@ class Hsl3Framework:
         self.lock = threading.Lock()
 
     def set_module(self, module):
-        # needed to simulate timer callbacks
+        # needed to allow framework access to modules (timer callbacks, instance ids)
+        module._instance_id = Hsl3Framework._next_instance_id
+        Hsl3Framework._next_instance_id += 1
         self.module = module
         
     def interfaces_to_dict(self, interface_list):
@@ -53,6 +57,11 @@ class Hsl3Framework:
 
     def get_module_id(self):
         return self.config["id"]
+
+    def get_instance_id(self):
+        if self.module is None:
+            raise Exception("set_module() not called yet")
+        return self.module._instance_id
 
     def run_in_context(self, func, *args):
         func(*args[0])
