@@ -41,6 +41,7 @@ class Hsl3Framework:
         self.timers = self.interfaces_to_dict(self.config["timers"])
         self.module = None
         self.output_state = {}
+        self.output_counter = {key: 0 for key in self.outputs.keys()}
         self.is_mock = True
         self.lock = threading.Lock()
 
@@ -81,6 +82,7 @@ class Hsl3Framework:
             if type(value) != float and type(value) != int:
                 raise Exception("Wrong number output type must be int or float, it is: {}".format(type(value)))
         self.output_state[key] = value
+        self.output_counter[key] += 1
         logging.debug("output[{}] := {}".format(key, value))
 
     def set_store(self, key, value):
@@ -118,6 +120,9 @@ class Hsl3Framework:
             return None
         else:
             return self.output_state[key]
+
+    def get_output_changes(self, key):
+        return self.output_counter[key]
 
 class Hsl3Slot:
     def __init__(self, value):
