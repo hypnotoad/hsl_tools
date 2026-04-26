@@ -56,6 +56,10 @@ class Hsl3Framework:
     def create_debug_section(self):
         return self.debug
 
+    def get_logger(self):
+        # not implemented yet: host, port, console, level
+        return logging
+
     def get_module_id(self):
         return self.config["id"]
 
