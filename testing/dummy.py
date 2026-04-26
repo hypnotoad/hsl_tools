@@ -37,6 +37,7 @@ class Hsl3Framework:
         self.debug = DebugSection()
         self.inputs = self.interfaces_to_dict(self.config["inputs"])
         self.outputs = self.interfaces_to_dict(self.config["outputs"])
+        self.stores = self.interfaces_to_dict(self.config["stores"])
         self.timers = self.interfaces_to_dict(self.config["timers"])
         self.module = None
         self.output_state = {}
@@ -77,6 +78,17 @@ class Hsl3Framework:
                 raise Exception("Wrong number output type must be int or float, it is: {}".format(type(value)))
         self.output_state[key] = value
         logging.debug("output[{}] := {}".format(key, value))
+
+    def set_store(self, key, value):
+        if not key in self.stores:
+            raise Exception("Unknown store: {}".format(key))
+        if self.stores[key]["type"] == "string":
+            if type(value) != bytes:
+                raise Exception("Wrong string store type must be bytes, it is: {}".format(type(value)))
+        else:
+            if type(value) != float and type(value) != int:
+                raise Exception("Wrong number store type must be int or float, it is: {}".format(type(value)))
+        logging.debug("store[{}] := {}".format(key, value))
 
     def set_timer(self, key, interval_s):
         if not key in self.timers:
