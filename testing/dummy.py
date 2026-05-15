@@ -44,6 +44,7 @@ class Hsl3Framework:
         self.output_counter = {key: 0 for key in self.outputs.keys()}
         self.is_mock = True
         self.lock = threading.Lock()
+        self.active_timers = {}
 
     def set_module(self, module):
         # needed to allow framework access to modules (timer callbacks, instance ids)
@@ -111,8 +112,14 @@ class Hsl3Framework:
             t[key].changed = True
             self.module.on_timer(t)
 
+        if key in self.active_timers:
+            logging.debug("Canceling timer {}".format(key))
+            self.active_timers[key].cancel()
+            
         if interval_s:
-            threading.Timer(interval_s, timer_finished).start()
+            logging.debug("Starting timer {}".format(key))
+            self.active_timers[key] = threading.Timer(interval_s, timer_finished)
+            self.active_timers[key].start()
             
         
     def get_output(self, key):
