@@ -137,3 +137,10 @@ class Hsl3Slots:
         return self.elements[key]
         
 
+    def change(self, key, value):
+        for e in self.elements.values():
+            e.changed = False
+        self.elements[key].value = value
+        self.elements[key].changed = True
+    
+    
