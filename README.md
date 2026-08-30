@@ -2,20 +2,17 @@
 - compiling
 - testing
 
-## HSL2 -> HSL3 Snippets
+## Usage to create a new HSL3 project
+1. Create docker image and install testing library:
 ```
-xq config.xml  -j > config.json
-```
-
-## Usage
-1. create docker image
-```
-cd hsl2 && docker build -t lindra.de/gira_hsl2 .
 cd hsl3 && docker build -t lindra.de/gira_hsl3 .
+cd testing && make install
 ```
 
-2. Copy Makefile and docker-setup.mk into your project and adapt
-   them. They are made for a flat hierarchy.
+2. Copy `template_hsl3_project` to `<name>` for a new HSL3 project and
+   add your `config.json` and `hsl3_<nr>_<name>.py` to it.
   
-3. Compile your project with make
+3. Compile your project with make.
+
+4. Use `dummy.Hsl3Framework` to construct your module in tests.
 
